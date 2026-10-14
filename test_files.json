@@ -1,0 +1,81 @@
+{
+    "X": {
+        "A": {
+            "duplicate_x.txt": {
+                "generator": "duplicate",
+                "mtime": "2021-01-10T12:00:00"
+            },
+            "temporary_a.temp": {
+                "generator": "random"
+            },
+            "diff_atr_x1.sh": {
+                "generator": "random",
+                "permissions": "755"
+            },
+            ":a\"b.c;d*e?f#g'h|i\\x1.txt": {
+                "generator": "random"
+            },
+            "empty.txt": {
+                "generator": "empty"
+            }
+        },
+        "duplicate_x_old.txt": {
+            "generator": "duplicate",
+            "mtime": "2020-01-10T12:00:00"
+        },
+        "temporary.temp": {
+            "generator": "random"
+        },
+        "diff_atr_x2.sh": {
+            "generator": "random",
+            "permissions": "755"
+        },
+        ":a\"b.c;d*e?f#g'h|i\\x2.txt": {
+            "generator": "random"
+        },
+        "only_in_x.txt": {
+            "generator": "unique"
+        },
+        "empty": {
+            "generator": "empty"
+        }
+    },
+    "Y1": {
+        "B": {
+            "temporary_b.temp": {
+                "generator": "random"
+            },
+            "empty.txt": {
+                "generator": "empty"
+            }
+        },
+        "only_in_y1.txt": {
+            "generator": "unique"
+        },
+        "duplicate_y.txt": {
+            "generator": "duplicate",
+            "mtime": "2023-01-10T12:00:00"
+        },
+        "duplicate_x.txt": {
+            "generator": "duplicate",
+            "mtime": "2022-01-10T12:00:00"
+        }
+    },
+    "Y2": {
+        "B": {
+            "duplicate_y.txt": {
+                "generator": "duplicate",
+                "mtime": "2024-01-10T12:00:00"
+            }
+        },
+        "only_in_y2.txt": {
+            "generator": "unique"
+        },
+        "temporary.temp": {
+            "generator": "random"
+        },
+        "empty": {
+            "generator": "empty"
+        }
+    }
+}

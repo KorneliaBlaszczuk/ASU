@@ -1,12 +1,8 @@
 import argparse
-import logging
 from pathlib import Path
 
 from config import Config
 from file_organizer import FileOrganizer, Mode
-
-logger = logging.getLogger(__name__)
-
 
 class CommandLineInterface:
     def __init__(
@@ -113,15 +109,6 @@ class CommandLineInterface:
 
     def run(self) -> None:
         """Execute the requested operation."""
-        logging.basicConfig(
-            level=(logging.DEBUG if self._args.verbose else logging.INFO),
-            format="%(levelname)s: %(message)s",
-        )
-
-        logger.debug("Selected mode: %s", self._args.mode.value)
-        logger.debug("Input directories: %s", self._args.directories)
-        logger.debug("Dry run enabled: %s", self._args.dry_run)
-
         organizer = self._create_file_organizer()
         organizer.run()
 
@@ -131,7 +118,14 @@ def main() -> None:
         description="Organize files by detecting duplicates and normalizing files."
     )
 
-    cli = CommandLineInterface(parser, Config())
+    config_path = Path.home() / ".clean_files"
+
+    if config_path.exists():
+        config = Config.from_file(config_path)
+    else:
+        config = Config()
+
+    cli = CommandLineInterface(parser, config)
     cli.run()
 
 

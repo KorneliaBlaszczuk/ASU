@@ -1,5 +1,4 @@
 import hashlib
-import logging
 import shutil
 from collections import defaultdict
 from collections.abc import Callable, Iterable
@@ -7,9 +6,6 @@ from enum import Enum
 from pathlib import Path
 
 from config import Config
-
-logger = logging.getLogger(__name__)
-
 
 class Mode(Enum):
     REMOVE_CONTENT_DUPLICATES = "duplicate-content"
@@ -76,9 +72,7 @@ class FileOrganizer:
 
     def run(self) -> None:
         """Execute the selected organization operation."""
-        logger.info("Starting file organization: %s", self._mode.value)
         self._actions[self._mode]()
-        logger.info("Finished file organization: %s", self._mode.value)
 
     # FILE DISCOVERY
 
@@ -91,7 +85,6 @@ class FileOrganizer:
 
         for directory in directories:
             if not directory.is_dir():
-                logger.warning("Skipping invalid directory: %s", directory)
                 continue
 
             for item in directory.rglob("*"):
@@ -106,7 +99,7 @@ class FileOrganizer:
                         yield path
 
                 except OSError:
-                    logger.exception("Could not inspect path: %s", item)
+                    print("Could not inspect path: %s", item)
 
     def _find_files(
         self,
@@ -121,7 +114,7 @@ class FileOrganizer:
                 if condition(path):
                     selected_files.append(path)
             except OSError:
-                logger.exception("Could not check file: %s", path)
+                print("Could not check file: %s", path)
 
         return selected_files
 
@@ -148,7 +141,7 @@ class FileOrganizer:
             try:
                 groups[path.stat().st_size].append(path)
             except OSError:
-                logger.exception("Could not get file size: %s", path)
+                print("Could not get file size: %s", path)
 
         return dict(groups)
 
@@ -180,7 +173,7 @@ class FileOrganizer:
                     file_hash = self._hash_file(path)
                     files_by_hash[(size, file_hash)].append(path)
                 except OSError:
-                    logger.exception("Could not hash file: %s", path)
+                    print("Could not hash file: %s", path)
 
         return [files for files in files_by_hash.values() if len(files) > 1]
 
@@ -230,8 +223,9 @@ class FileOrganizer:
 
     def _is_name_problematic(self, path: Path) -> bool:
         return any(
-            symbol in path.stem for symbol in self._config.problematic_symbols
-        )
+            symbol in path.name
+            for symbol in self._config.problematic_symbols
+        )   
 
     def _is_permission_set_unusual(self, path: Path) -> bool:
         return (path.stat().st_mode & 0o777) != self._config.permission_set
@@ -245,9 +239,6 @@ class FileOrganizer:
     ) -> bool:
         """Ask for confirmation, unless running non-interactively."""
         if self._dry_run:
-            logger.info("[DRY RUN] %s", message)
-            for path in paths:
-                logger.info("  %s", path)
             return False
 
         if not self._is_interactive:
@@ -276,7 +267,7 @@ class FileOrganizer:
             try:
                 keep = criterion(paths)
             except OSError:
-                logger.exception("Could not select a file to keep")
+                print("Could not select a file to keep")
                 continue
 
             to_remove = [path for path in paths if path != keep]
@@ -303,7 +294,7 @@ class FileOrganizer:
                 try:
                     operation(path)
                 except OSError:
-                    logger.exception("Operation failed for file: %s", path)
+                    print("Operation failed for file: %s", path)
 
     # ACTIONS
 
@@ -358,10 +349,6 @@ class FileOrganizer:
             destination = self._main_dir / path.name
 
             if destination.exists():
-                logger.warning(
-                    "Skipping move because destination exists: %s",
-                    destination,
-                )
                 continue
 
             if self._confirm(
@@ -371,7 +358,7 @@ class FileOrganizer:
                 try:
                     self._move_file(path, destination)
                 except OSError:
-                    logger.exception("Could not move file: %s", path)
+                    print("Could not move file: %s", path)
 
     # FILE OPERATIONS
 
@@ -385,8 +372,6 @@ class FileOrganizer:
         # shutil.move supports cross-filesystem moves.
         shutil.move(str(source), str(destination))
 
-        logger.info("Moved file from %s to %s", old_source, destination)
-
     def _remove_files(
         self,
         paths: list[Path],
@@ -399,16 +384,14 @@ class FileOrganizer:
             try:
                 self._remove(path)
             except OSError:
-                logger.exception("Could not remove file: %s", path)
+                print("Could not remove file: %s", path)
 
     @staticmethod
     def _remove(path: Path) -> None:
         path.unlink(missing_ok=False)
-        logger.info("Removed file %s", path)
 
     def normalize_permission_set(self, path: Path) -> None:
         path.chmod(self._config.permission_set)
-        logger.info("Normalized permissions of file %s", path)
 
     def normalize_name(self, path: Path) -> None:
         """Replace problematic characters in a filename while
@@ -433,4 +416,3 @@ class FileOrganizer:
             )
 
         path.rename(new_path)
-        logger.info("Renamed file %s to %s", path, new_path)

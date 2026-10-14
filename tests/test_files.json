@@ -1,0 +1,154 @@
+{
+    "X": {
+        "duplicate_old.txt": {
+            "generator": "duplicate",
+            "mtime": "2020-01-01T10:00:00",
+            "permissions": "644"
+        },
+        "duplicate_content.txt": {
+            "generator": "duplicate",
+            "mtime": "2022-05-10T12:00:00",
+            "permissions": "644"
+        },
+        "report.txt": {
+            "generator": "unique",
+            "mtime": "2023-01-01T09:00:00",
+            "permissions": "644"
+        },
+        "empty.txt": {
+            "generator": "empty",
+            "permissions": "644"
+        },
+        "cache.tmp": {
+            "generator": "random",
+            "permissions": "644"
+        },
+        "backup.temp": {
+            "generator": "random",
+            "permissions": "644"
+        },
+        "bad:name.txt": {
+            "generator": "unique",
+            "permissions": "600"
+        },
+        "bad?.txt": {
+            "generator": "unique",
+            "permissions": "644"
+        },
+        "space name.txt": {
+            "generator": "unique",
+            "permissions": "644"
+        },
+        "readonly.txt": {
+            "generator": "unique",
+            "permissions": "444"
+        },
+        "private.txt": {
+            "generator": "unique",
+            "permissions": "600"
+        },
+        "script.sh": {
+            "generator": "unique",
+            "permissions": "755"
+        },
+        "normal_document.txt": {
+            "generator": "unique",
+            "permissions": "644"
+        },
+        "zero_bytes.txt": {
+            "generator": "empty",
+            "permissions": "600"
+        }
+    },
+    "Y1": {
+        "duplicate_new.txt": {
+            "generator": "duplicate",
+            "mtime": "2024-06-15T14:30:00",
+            "permissions": "644"
+        },
+        "report.txt": {
+            "generator": "unique",
+            "mtime": "2025-01-01T10:00:00",
+            "permissions": "644"
+        },
+        "empty_from_y1.txt": {
+            "generator": "empty",
+            "permissions": "644"
+        },
+        "session.tmp": {
+            "generator": "random",
+            "permissions": "644"
+        },
+        "invalid|name.txt": {
+            "generator": "unique",
+            "permissions": "644"
+        },
+        "shared_content_y1.txt": {
+            "generator": "duplicate",
+            "mtime": "2021-03-20T08:00:00",
+            "permissions": "644"
+        },
+        "archive.txt": {
+            "generator": "unique",
+            "mtime": "2022-11-11T11:11:00",
+            "permissions": "640"
+        },
+        "presentation.txt": {
+            "generator": "unique",
+            "permissions": "664"
+        },
+        "draft.txt": {
+            "generator": "unique",
+            "permissions": "600"
+        },
+        "ordinary_y1.txt": {
+            "generator": "random",
+            "permissions": "644"
+        }
+    },
+    "Y2": {
+        "another_duplicate.txt": {
+            "generator": "duplicate",
+            "mtime": "2023-02-02T12:00:00",
+            "permissions": "644"
+        },
+        "shared_content_y2.txt": {
+            "generator": "duplicate",
+            "mtime": "2022-08-08T08:00:00",
+            "permissions": "644"
+        },
+        "report_copy.txt": {
+            "generator": "unique",
+            "mtime": "2024-04-04T10:00:00",
+            "permissions": "644"
+        },
+        "empty_from_y2.txt": {
+            "generator": "empty",
+            "permissions": "600"
+        },
+        "crash.tmp": {
+            "generator": "random",
+            "permissions": "644"
+        },
+        "backup.temp": {
+            "generator": "random",
+            "permissions": "644"
+        },
+        "bad<name>.txt": {
+            "generator": "unique",
+            "permissions": "644"
+        },
+        "readonly_copy.txt": {
+            "generator": "unique",
+            "permissions": "444"
+        },
+        "executable.sh": {
+            "generator": "unique",
+            "permissions": "755"
+        },
+        "ordinary_y2.txt": {
+            "generator": "random",
+            "permissions": "644"
+        }
+    }
+}

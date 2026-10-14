@@ -1,0 +1,21 @@
+{
+    "permission_set": "644",
+    "problematic_symbols": [
+        ":",
+        "\"",
+        ";",
+        "*",
+        "?",
+        "$",
+        "#",
+        "'",
+        "|",
+        "\\"
+    ],
+    "substitute_symbol": "_",
+    "temporary": [
+        "*.tmp",
+        "*~",
+        "*.temp"
+    ]
+}

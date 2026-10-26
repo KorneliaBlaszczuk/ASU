@@ -215,7 +215,7 @@ class FileOrganizer:
     # CONDITIONS
 
     def _is_temporary(self, path: Path) -> bool:
-        return path.suffix in self._config.temporary
+        return any(path.match(pattern) for pattern in self._config.temporary)
 
     @staticmethod
     def _is_empty(path: Path) -> bool:
@@ -394,8 +394,7 @@ class FileOrganizer:
         path.chmod(self._config.permission_set)
 
     def normalize_name(self, path: Path) -> None:
-        """Replace problematic characters in a filename while
-        preserving its suffix."""
+        """Replace problematic characters and avoid filename collisions."""
         stem = path.stem
         suffix = path.suffix
 
@@ -405,14 +404,17 @@ class FileOrganizer:
                 self._config.substitute_symbol,
             )
 
-        new_path = path.with_name(stem + suffix)
+        new_name = stem + suffix
+        new_path = path.with_name(new_name)
 
         if new_path == path:
             return
 
-        if new_path.exists():
-            raise FileExistsError(
-                f"Cannot rename {path}: destination already exists: {new_path}"
-            )
+        counter = 1
+
+        while new_path.exists():
+            new_name = f"{stem}_{counter}{suffix}"
+            new_path = path.with_name(new_name)
+            counter += 1
 
         path.rename(new_path)
